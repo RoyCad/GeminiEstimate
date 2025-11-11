@@ -27,7 +27,7 @@ import BrickworkCalculator from '@/components/brickwork-calculator';
 import CcCastingCalculator from '@/components/cc-casting-calculator';
 import EarthworkCalculator from '@/components/earthwork-calculator';
 import StandaloneCalculator from '@/components/standalone-calculator';
-import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, Pilaster, AlignHorizontalSpaceBetween, LayoutGrid, Stairs, Webhook, Brick, Shovel, Sparkles, Building2 } from 'lucide-react';
+import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, AlignHorizontalSpaceBetween, LayoutGrid, Stairs, Webhook, ToyBrick, Shovel, Sparkles, Building2 } from 'lucide-react';
 import StandaloneFootingCalculator from '@/components/standalone-footing-calculator';
 
 type PartType =
@@ -63,7 +63,7 @@ const partTypes: Record<PartType, PartDefinition> = {
   'combined-footing': { label: 'Combined Footing', component: CombinedFootingMaterialCalculator, icon: GitMerge },
   'short-column': { label: 'Short Column', component: ShortColumnMaterialCalculator, icon: Building2 },
   'grade-beam': { label: 'Grade Beam', component: GradeBeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
-  column: { label: 'Column', component: ColumnMaterialCalculator, icon: Pilaster },
+  column: { label: 'Column', component: ColumnMaterialCalculator, icon: Building2 },
   beam: { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   slab: { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
   staircase: { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
@@ -72,7 +72,7 @@ const partTypes: Record<PartType, PartDefinition> = {
     component: RetainingWallMaterialCalculator,
     icon: Webhook,
   },
-  brickwork: { label: 'Brickwork', component: BrickworkCalculator, icon: Brick },
+  brickwork: { label: 'Brickwork', component: BrickworkCalculator, icon: ToyBrick },
 };
 
 export default function EstimatorPage() {
@@ -119,3 +119,5 @@ export default function EstimatorPage() {
     </div>
   );
 }
+
+    

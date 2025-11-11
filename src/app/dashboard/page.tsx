@@ -24,7 +24,6 @@ import {
   Archive,
   GitMerge,
   AlignHorizontalSpaceBetween,
-  Pilaster,
   LayoutGrid,
   Stairs,
   Webhook,
@@ -105,7 +104,7 @@ const partTypes: Record<PartType, PartDefinition> = {
   'combined-footing': { label: 'Combined Footing', component: CombinedFootingMaterialCalculator, icon: GitMerge },
   'short-column': { label: 'Short Column', component: ShortColumnMaterialCalculator, icon: Building2 },
   'grade-beam': { label: 'Grade Beam', component: GradeBeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
-  'column': { label: 'Column', component: ColumnMaterialCalculator, icon: Pilaster },
+  'column': { label: 'Column', component: ColumnMaterialCalculator, icon: Building2 },
   'beam': { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   'slab': { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
   'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
@@ -460,5 +459,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
 
     

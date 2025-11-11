@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Hash, Layers, ChevronsUpDown, BarChart, Ruler, PlusCircle, Save } from 'lucide-react';
+import { Hash, Layers, ChevronsUpDown, BarChart, Ruler, PlusCircle, Save, SquareStack } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 const standardBarSizes = [8, 10, 12, 16, 20, 22, 25, 28, 32];
@@ -26,14 +26,6 @@ type Inputs = {
   clearCover: number;
   lappingLength: number;
 };
-
-const ColumnIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square-pilaster">
-        <rect width="18" height="18" x="3" y="3" rx="2"/>
-        <path d="M8 22V4"/>
-        <path d="M16 22V4"/>
-    </svg>
-)
 
 type ColumnMaterialCalculatorProps = {
   onSave: (data: Inputs) => void;
@@ -82,7 +74,7 @@ export default function ColumnMaterialCalculator({ onSave, initialData, isEditin
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-            <ColumnIcon />
+            <SquareStack />
             <CardTitle>{isEditing ? "Edit" : "Add"} Column Calculation</CardTitle>
         </div>
         <CardDescription>Enter the details for this column group.</CardDescription>
@@ -200,5 +192,7 @@ export default function ColumnMaterialCalculator({ onSave, initialData, isEditin
     </Card>
   );
 }
+
+    
 
     

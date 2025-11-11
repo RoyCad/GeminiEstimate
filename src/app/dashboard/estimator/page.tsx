@@ -27,7 +27,7 @@ import BrickworkCalculator from '@/components/brickwork-calculator';
 import CcCastingCalculator from '@/components/cc-casting-calculator';
 import EarthworkCalculator from '@/components/earthwork-calculator';
 import StandaloneCalculator from '@/components/standalone-calculator';
-import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, Pilaster, AlignHorizontalSpaceBetween, LayoutGrid, Stairs, Webhook, Brick, Shovel, Sparkles, Building2 } from 'lucide-react';
+import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, SquareStack, AlignHorizontalSpaceBetween, LayoutGrid, Stairs, Anchor, Brick, Shovel, Sparkles, Building2 } from 'lucide-react';
 import StandaloneFootingCalculator from '@/components/standalone-footing-calculator';
 
 type PartType =
@@ -61,16 +61,16 @@ const partTypes: Record<PartType, PartDefinition> = {
   'standalone-footing': { label: 'Standalone Footing', component: StandaloneFootingCalculator, icon: Archive },
   'mat-foundation': { label: 'Mat Foundation', component: MatFoundationMaterialCalculator, icon: Archive },
   'combined-footing': { label: 'Combined Footing', component: CombinedFootingMaterialCalculator, icon: GitMerge },
-  'short-column': { label: 'Short Column', component: ShortColumnMaterialCalculator, icon: Building2 },
+  'short-column': { label: 'Short Column', component: Building2, icon: Building2 },
   'grade-beam': { label: 'Grade Beam', component: GradeBeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
-  column: { label: 'Column', component: ColumnMaterialCalculator, icon: Pilaster },
+  column: { label: 'Column', component: ColumnMaterialCalculator, icon: SquareStack },
   beam: { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   slab: { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
   staircase: { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
   'retaining-wall': {
     label: 'Retaining Wall',
     component: RetainingWallMaterialCalculator,
-    icon: Webhook,
+    icon: Anchor,
   },
   brickwork: { label: 'Brickwork', component: BrickworkCalculator, icon: Brick },
 };

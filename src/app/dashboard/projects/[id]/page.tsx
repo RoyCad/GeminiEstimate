@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, Building, PlusCircle, Trash2, Save, BarChart, Edit, Calculator, FileText, DollarSign, Receipt, Users, AlignHorizontalSpaceBetween, Cylinder, LayoutGrid, ToyBrick, Shovel, Sparkles, GitMerge, Webhook, Stairs, Archive, BoxSelect, Building2 } from 'lucide-react';
+import { ArrowLeft, Building, PlusCircle, Trash2, Save, BarChart, Edit, Calculator, FileText, DollarSign, Receipt, Users, AlignHorizontalSpaceBetween, Cylinder, LayoutGrid, ToyBrick, Shovel, Sparkles, GitMerge, Webhook, Archive, BoxSelect, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import {
   Dialog,
@@ -69,6 +69,13 @@ import {
 } from '@/components/ui/table';
 import PrintReportWrapper from '@/components/print-report-wrapper';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
+const StairsIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-stairs">
+        <path d="M4 18h4v-4h4v-4h4V6"/>
+        <path d="m7 14 3-3 4-4 4-4"/>
+    </svg>
+);
 
 
 type PartType =
@@ -148,7 +155,7 @@ const partTypes: Record<PartType, PartDefinition> = {
   'column': { label: 'Column', component: ColumnMaterialCalculator, icon: Building2 },
   'beam': { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   'slab': { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
-  'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
+  'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: StairsIcon },
   'retaining-wall': { label: 'Retaining Wall', component: RetainingWallMaterialCalculator, icon: Webhook },
   'brickwork': { label: 'Brickwork', component: BrickworkCalculator, icon: ToyBrick },
 };

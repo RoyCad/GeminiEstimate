@@ -27,8 +27,16 @@ import BrickworkCalculator from '@/components/brickwork-calculator';
 import CcCastingCalculator from '@/components/cc-casting-calculator';
 import EarthworkCalculator from '@/components/earthwork-calculator';
 import StandaloneCalculator from '@/components/standalone-calculator';
-import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, AlignHorizontalSpaceBetween, LayoutGrid, Stairs, Webhook, ToyBrick, Shovel, Sparkles, Building2 } from 'lucide-react';
+import { Calculator, Cylinder, BoxSelect, Archive, GitMerge, AlignHorizontalSpaceBetween, LayoutGrid, Webhook, ToyBrick, Shovel, Sparkles, Building2 } from 'lucide-react';
 import StandaloneFootingCalculator from '@/components/standalone-footing-calculator';
+
+const StairsIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-stairs">
+        <path d="M4 18h4v-4h4v-4h4V6"/>
+        <path d="m7 14 3-3 4-4 4-4"/>
+    </svg>
+);
+
 
 type PartType =
   | 'pile'
@@ -66,7 +74,7 @@ const partTypes: Record<PartType, PartDefinition> = {
   column: { label: 'Column', component: ColumnMaterialCalculator, icon: Building2 },
   beam: { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   slab: { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
-  staircase: { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
+  staircase: { label: 'Staircase', component: StaircaseMaterialCalculator, icon: StairsIcon },
   'retaining-wall': {
     label: 'Retaining Wall',
     component: RetainingWallMaterialCalculator,

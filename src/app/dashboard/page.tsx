@@ -26,9 +26,8 @@ import {
   AlignHorizontalSpaceBetween,
   Pilaster,
   LayoutGrid,
-  Stairs,
   Webhook,
-  ToyBrick,
+  Brick,
   Shovel,
   Sparkles,
   Building2,
@@ -110,8 +109,16 @@ const partTypes: Record<PartType, PartDefinition> = {
   'slab': { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
   'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
   'retaining-wall': { label: 'Retaining Wall', component: RetainingWallMaterialCalculator, icon: Webhook },
-  'brickwork': { label: 'Brickwork', component: BrickworkCalculator, icon: ToyBrick },
+  'brickwork': { label: 'Brickwork', component: BrickworkCalculator, icon: Brick },
 };
+
+
+const StairsIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-stairs">
+        <path d="M4 18h4v-4h4v-4h4V6"/>
+        <path d="m7 14 3-3 4-4 4-4"/>
+    </svg>
+);
 
 
 type Project = {
@@ -460,5 +467,7 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
 
     

@@ -455,7 +455,7 @@ export default function ProjectDetailPage({ params }: { params: { id: string } }
               )}
             </CardContent>
           </Card>
-           <Card className="neumorphic-card">
+           <Card className="glass-card">
               <CardHeader>
                   <div className='flex items-center gap-2'>
                       <Users className="w-5 h-5 text-primary" />

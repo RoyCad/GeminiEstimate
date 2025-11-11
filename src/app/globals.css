@@ -90,7 +90,4 @@
   .glass-card {
     @apply bg-card/60 backdrop-blur-lg border;
   }
-  .neumorphic-card {
-    @apply bg-background/50 border border-black/5 shadow-[8px_8px_16px_rgba(0,0,0,0.05),-8px_-8px_16px_rgba(255,255,255,0.8)] dark:shadow-[8px_8px_16px_rgba(0,0,0,0.2),-8px_-8px_16px_rgba(255,255,255,0.05)];
-  }
 }

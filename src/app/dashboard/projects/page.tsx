@@ -215,7 +215,7 @@ export default function ProjectsPage() {
                 </div>
             </div>
         
-        <Card className={cn(userRole === 'Client' ? 'neumorphic-card' : 'glass-card')}>
+        <Card className="glass-card">
             <CardHeader>
                 <CardTitle>All Projects</CardTitle>
                 <CardDescription>A list of all projects in your account.</CardDescription>

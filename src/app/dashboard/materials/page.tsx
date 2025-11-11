@@ -265,7 +265,7 @@ export default function MaterialsPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <Card className={cn(sessionRole === 'Client' ? 'neumorphic-card' : 'glass-card')}>
+            <Card className="glass-card">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle>Material Stock</CardTitle>
@@ -329,7 +329,7 @@ export default function MaterialsPage() {
                 </CardContent>
             </Card>
 
-             <Card className={cn(sessionRole === 'Client' ? 'neumorphic-card' : 'glass-card')}>
+             <Card className="glass-card">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
                         <CardTitle>Client Material Proposals</CardTitle>

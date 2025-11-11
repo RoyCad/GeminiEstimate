@@ -1,0 +1,49 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      // Check if the user has an 'Admin' role in their user document.
+      // Important: This requires that a user can read their own user document.
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin';
+    }
+
+    // Admins can read/write any document in the database
+    match /{document=**} {
+        allow read, write: if isAdmin();
+    }
+    
+    // Any authenticated user can create their own user document on sign up
+    match /users/{userId} {
+      allow create: if request.auth != null;
+    }
+    
+    // An authenticated user can read, update, or delete their own user document
+    match /users/{userId} {
+      allow read, update, delete: if request.auth.uid == userId;
+    }
+
+    // Clients can read projects assigned to them
+    match /projects/{projectId} {
+        allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+    }
+    
+    // Clients can read subcollections for their own project
+    match /projects/{projectId}/{subcollection}/{docId} {
+        allow read: if request.auth != null && get(/databases/$(database)/documents/projects/$(projectId)).data.userId == request.auth.uid;
+    }
+    
+    // Clients can submit material proposals for themselves
+    match /materialProposals/{proposalId} {
+        allow create: if request.auth != null && request.resource.data.submittedBy == request.auth.uid;
+        allow read: if request.auth != null && resource.data.submittedBy == request.auth.uid;
+    }
+    
+    // Any authenticated user can read the central materials stock
+    match /materials/{materialId} {
+        allow read: if request.auth != null;
+    }
+  }
+}

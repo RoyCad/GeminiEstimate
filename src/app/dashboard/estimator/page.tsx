@@ -61,7 +61,7 @@ const partTypes: Record<PartType, PartDefinition> = {
   'standalone-footing': { label: 'Standalone Footing', component: StandaloneFootingCalculator, icon: Archive },
   'mat-foundation': { label: 'Mat Foundation', component: MatFoundationMaterialCalculator, icon: Archive },
   'combined-footing': { label: 'Combined Footing', component: CombinedFootingMaterialCalculator, icon: GitMerge },
-  'short-column': { label: 'Short Column', component: Building2, icon: Building2 },
+  'short-column': { label: 'Short Column', component: ShortColumnMaterialCalculator, icon: Building2 },
   'grade-beam': { label: 'Grade Beam', component: GradeBeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   column: { label: 'Column', component: ColumnMaterialCalculator, icon: SquareStack },
   beam: { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },

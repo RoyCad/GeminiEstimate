@@ -94,6 +94,13 @@ type PartDefinition = {
   icon: React.FC<any>;
 };
 
+const StairsIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-stairs">
+        <path d="M4 18h4v-4h4v-4h4V6"/>
+        <path d="m7 14 3-3 4-4 4-4"/>
+    </svg>
+);
+
 const partTypes: Record<PartType, PartDefinition> = {
   'earthwork': { label: 'Earthwork', component: EarthworkCalculator, icon: Shovel },
   'cc-casting': { label: 'CC / Soling', component: CcCastingCalculator, icon: Sparkles },
@@ -107,18 +114,10 @@ const partTypes: Record<PartType, PartDefinition> = {
   'column': { label: 'Column', component: ColumnMaterialCalculator, icon: Pilaster },
   'beam': { label: 'Floor Beam', component: BeamMaterialCalculator, icon: AlignHorizontalSpaceBetween },
   'slab': { label: 'Slab', component: SlabMaterialCalculator, icon: LayoutGrid },
-  'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: Stairs },
+  'staircase': { label: 'Staircase', component: StaircaseMaterialCalculator, icon: StairsIcon },
   'retaining-wall': { label: 'Retaining Wall', component: RetainingWallMaterialCalculator, icon: Webhook },
   'brickwork': { label: 'Brickwork', component: BrickworkCalculator, icon: Brick },
 };
-
-
-const StairsIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-stairs">
-        <path d="M4 18h4v-4h4v-4h4V6"/>
-        <path d="m7 14 3-3 4-4 4-4"/>
-    </svg>
-);
 
 
 type Project = {

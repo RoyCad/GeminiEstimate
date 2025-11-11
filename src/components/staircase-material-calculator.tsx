@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Ruler, ChevronsUpDown, BarChart, Layers, PlusCircle, Save, Hash } from 'lucide-react';
+import { Ruler, ChevronsUpDown, BarChart, Layers, PlusCircle, Save, Hash, Stairs } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 const standardBarSizes = [8, 10, 12, 16, 20, 22, 25, 28, 32];
@@ -85,7 +85,7 @@ export default function StaircaseMaterialCalculator({ onSave, initialData, isEdi
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
-            <StairsIcon />
+            <Stairs />
             <CardTitle>{isEditing ? "Edit" : "Add"} Staircase Calculation</CardTitle>
         </div>
         <CardDescription>Enter the details for the staircase.</CardDescription>

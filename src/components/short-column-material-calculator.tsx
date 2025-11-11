@@ -197,5 +197,6 @@ export default function ShortColumnMaterialCalculator({ onSave, initialData, isE
     </Card>
   );
 }
+    
 
     

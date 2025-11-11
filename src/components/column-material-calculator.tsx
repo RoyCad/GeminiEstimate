@@ -39,15 +39,16 @@ type ColumnMaterialCalculatorProps = {
   onSave: (data: Inputs) => void;
   initialData?: Inputs;
   isEditing?: boolean;
+  projectData?: { numberOfStories?: number };
 };
 
-export default function ColumnMaterialCalculator({ onSave, initialData, isEditing = false }: ColumnMaterialCalculatorProps) {
+export default function ColumnMaterialCalculator({ onSave, initialData, isEditing = false, projectData }: ColumnMaterialCalculatorProps) {
   const [inputs, setInputs] = useState<Inputs>(initialData || {
     totalColumns: 25,
     columnWidth: 12,
     columnDepth: 15,
     columnHeight: 10,
-    numberOfFloors: 5,
+    numberOfFloors: projectData?.numberOfStories || 5,
     mixRatio: "1:1.5:3",
     mainBarDia: 20,
     mainBarCount: 8,
@@ -60,8 +61,10 @@ export default function ColumnMaterialCalculator({ onSave, initialData, isEditin
   useEffect(() => {
     if (initialData) {
       setInputs(initialData);
+    } else if (projectData?.numberOfStories) {
+      setInputs(prev => ({ ...prev, numberOfFloors: projectData.numberOfStories || 5 }));
     }
-  }, [initialData]);
+  }, [initialData, projectData]);
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,10 +117,10 @@ export default function ColumnMaterialCalculator({ onSave, initialData, isEditin
                   <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-muted-foreground">feet</span>
               </div>
           </div>
-          <div className="space-y-2">
-              <Label htmlFor="numberOfFloors" className="flex items-center gap-2 text-muted-foreground text-xs"><Layers className="w-4 h-4" />Number of Floors</Label>
+           <div className="space-y-2">
+              <Label htmlFor="numberOfFloors" className="flex items-center gap-2 text-muted-foreground text-xs"><Layers className="w-4 h-4" />Number of Floors (G+)</Label>
               <div className="relative">
-                  <Input id="numberOfFloors" name="numberOfFloors" type="number" value={inputs.numberOfFloors} onChange={handleInputChange} placeholder="Nos." className="pr-12"/>
+                  <Input id="numberOfFloors" name="numberOfFloors" type="number" value={inputs.numberOfFloors} onChange={handleInputChange} readOnly={!!projectData?.numberOfStories} placeholder="Nos." className={`pr-12 ${projectData?.numberOfStories ? 'bg-muted' : ''}`}/>
                   <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-muted-foreground">Nos.</span>
               </div>
           </div>
@@ -197,3 +200,5 @@ export default function ColumnMaterialCalculator({ onSave, initialData, isEditin
     </Card>
   );
 }
+
+    

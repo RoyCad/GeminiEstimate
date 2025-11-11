@@ -1,12 +1,13 @@
 
+
 'use client';
 
 import React, { useRef } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { StructuralPart, ProjectData, MaterialPrices } from '@/components/project-detail-client';
+import type { StructuralPart, ProjectData, MaterialPrices } from '@/app/dashboard/projects/[id]/page';
 import { calculateAllPartsMaterials, aggregateMaterials, MaterialQuantities } from '@/lib/material-calculator';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
-import { BarChart, Layers, Droplets, Brick, Building2, Printer, Shovel, FileText } from 'lucide-react';
+import { BarChart, Layers, Droplets, ToyBrick, Building2, Printer, Shovel, FileText } from 'lucide-react';
 import { Button } from './ui/button';
 import Image from 'next/image';
 
@@ -166,6 +167,7 @@ const FullProjectReport: React.FC<FullProjectReportProps> = ({ project }) => {
   const concreteMaterials = Object.fromEntries(Object.entries(totalMaterials).filter(([key]) => ['Cement (bags)', 'Sand (cft)', 'Aggregate (cft)'].includes(key)));
   const brickworkMaterials = Object.fromEntries(Object.entries(totalMaterials).filter(([key]) => key.includes('Bricks')));
   const steelMaterials = Object.fromEntries(Object.entries(totalMaterials).filter(([key]) => key.startsWith('Steel')));
+  const formworkMaterial = Object.fromEntries(Object.entries(totalMaterials).filter(([key]) => key.startsWith('Shuttering')));
 
 
   return (
@@ -221,8 +223,9 @@ const FullProjectReport: React.FC<FullProjectReportProps> = ({ project }) => {
                     </div>
                     {grandTotalRender(earthworkMaterials, "Earthwork Summary", <Shovel className="w-4 h-4 text-primary" />)}
                     {grandTotalRender(concreteMaterials, "Total Concrete Materials", <Droplets className="w-4 h-4 text-primary" />)}
-                    {grandTotalRender(brickworkMaterials, "Total Brickwork Materials", <Brick className="w-4 h-4 text-primary" />)}
+                    {grandTotalRender(brickworkMaterials, "Total Brickwork Materials", <ToyBrick className="w-4 h-4 text-primary" />)}
                     {grandTotalRender(steelMaterials, "Total Reinforcement Steel", <Layers className="w-4 h-4 text-primary" />)}
+                    {grandTotalRender(formworkMaterial, "Total Formwork Area", <Layers className="w-4 h-4 text-primary" />)}
                 </CardContent>
             </Card>
         </div>
@@ -237,5 +240,7 @@ const FullProjectReport: React.FC<FullProjectReportProps> = ({ project }) => {
 };
 
 export default FullProjectReport;
+
+    
 
     

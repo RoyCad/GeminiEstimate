@@ -166,21 +166,22 @@ export default function MaterialsPage() {
             }].sort((a,b) => a.name.localeCompare(b.name)));
         }
         
-        try {
-            await batch.commit()
-            setProposals(prev => prev.map(p => p.id === proposal.id ? { ...p, status: newStatus } : p));
-            toast({
-                title: `Proposal ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}`,
-                description: `The proposal for "${proposal.materialName}" has been updated.`
+        batch.commit()
+            .then(() => {
+                setProposals(prev => prev.map(p => p.id === proposal.id ? { ...p, status: newStatus } : p));
+                toast({
+                    title: `Proposal ${newStatus.charAt(0).toUpperCase() + newStatus.slice(1)}`,
+                    description: `The proposal for "${proposal.materialName}" has been updated.`
+                });
+            })
+            .catch((serverError) => {
+                const permissionError = new FirestorePermissionError({
+                    path: proposalRef.path,
+                    operation: 'update',
+                    requestResourceData: { status: newStatus }
+                });
+                errorEmitter.emit('permission-error', permissionError);
             });
-        } catch(serverError) {
-            const permissionError = new FirestorePermissionError({
-                path: proposalRef.path,
-                operation: 'update',
-                requestResourceData: { status: newStatus }
-            });
-            errorEmitter.emit('permission-error', permissionError);
-        };
     };
 
 
@@ -439,38 +440,40 @@ function MaterialDialog({
         if(existingMaterial) {
             // Update
             const docRef = doc(firestore, 'materials', existingMaterial.id);
-            try {
-                await updateDoc(docRef, operationData)
-                toast({ title: 'Material Updated', description: `${values.name} has been updated.` });
-                onMaterialEdited?.({ id: existingMaterial.id, ...values});
-                form.reset();
-                setOpen(false);
-            } catch(serverError) {
-                const permissionError = new FirestorePermissionError({
-                    path: docRef.path,
-                    operation: 'update',
-                    requestResourceData: operationData
+            updateDoc(docRef, operationData)
+                .then(() => {
+                    toast({ title: 'Material Updated', description: `${values.name} has been updated.` });
+                    onMaterialEdited?.({ id: existingMaterial.id, ...values});
+                    form.reset();
+                    setOpen(false);
+                })
+                .catch(serverError => {
+                    const permissionError = new FirestorePermissionError({
+                        path: docRef.path,
+                        operation: 'update',
+                        requestResourceData: operationData
+                    });
+                    errorEmitter.emit('permission-error', permissionError);
                 });
-                errorEmitter.emit('permission-error', permissionError);
-            };
 
         } else {
             // Add new
             const collectionRef = collection(firestore, 'materials');
-            try {
-                const docRef = await addDoc(collectionRef, operationData)
-                toast({ title: 'Material Added', description: `${values.name} has been added to the stock.` });
-                onMaterialAdded?.({ id: docRef.id, ...values });
-                form.reset();
-                setOpen(false);
-            } catch(serverError) {
-                const permissionError = new FirestorePermissionError({
-                    path: collectionRef.path,
-                    operation: 'create',
-                    requestResourceData: operationData
+            addDoc(collectionRef, operationData)
+                .then(docRef => {
+                    toast({ title: 'Material Added', description: `${values.name} has been added to the stock.` });
+                    onMaterialAdded?.({ id: docRef.id, ...values });
+                    form.reset();
+                    setOpen(false);
+                })
+                .catch(serverError => {
+                    const permissionError = new FirestorePermissionError({
+                        path: collectionRef.path,
+                        operation: 'create',
+                        requestResourceData: operationData
+                    });
+                    errorEmitter.emit('permission-error', permissionError);
                 });
-                errorEmitter.emit('permission-error', permissionError);
-            };
         }
     }
 
@@ -478,19 +481,20 @@ function MaterialDialog({
         if (!firestore || !existingMaterial || !onMaterialDeleted) return;
         
         const docRef = doc(firestore, 'materials', existingMaterial.id);
-        try {
-            await deleteDoc(docRef)
-            toast({ title: "Material Deleted", description: "The material has been removed from stock." });
-            onMaterialDeleted(existingMaterial.id);
-            setDeleteDialogOpen(false);
-            setOpen(false);
-        } catch(serverError) {
-             const permissionError = new FirestorePermissionError({
-                path: docRef.path,
-                operation: 'delete',
+        deleteDoc(docRef)
+            .then(() => {
+                toast({ title: "Material Deleted", description: "The material has been removed from stock." });
+                onMaterialDeleted(existingMaterial.id);
+                setDeleteDialogOpen(false);
+                setOpen(false);
+            })
+            .catch(serverError => {
+                 const permissionError = new FirestorePermissionError({
+                    path: docRef.path,
+                    operation: 'delete',
+                });
+                errorEmitter.emit('permission-error', permissionError);
             });
-            errorEmitter.emit('permission-error', permissionError);
-        };
     }
 
     return (
@@ -608,20 +612,21 @@ function ProposalDialog({ onProposalAdded }: { onProposalAdded: (proposal: Mater
         };
 
         const collectionRef = collection(firestore, 'materialProposals');
-        try {
-            const docRef = await addDoc(collectionRef, operationData)
-            toast({ title: 'Proposal Submitted', description: `Your proposal for ${values.materialName} has been sent for review.` });
-            onProposalAdded({ id: docRef.id, submittedBy: user.uid, status: 'pending', ...values });
-            form.reset();
-            setOpen(false);
-        } catch(serverError) {
-            const permissionError = new FirestorePermissionError({
-                path: collectionRef.path,
-                operation: 'create',
-                requestResourceData: operationData
+        addDoc(collectionRef, operationData)
+            .then((docRef) => {
+                toast({ title: 'Proposal Submitted', description: `Your proposal for ${values.materialName} has been sent for review.` });
+                onProposalAdded({ id: docRef.id, submittedBy: user.uid, status: 'pending', ...values });
+                form.reset();
+                setOpen(false);
+            })
+            .catch(serverError => {
+                const permissionError = new FirestorePermissionError({
+                    path: collectionRef.path,
+                    operation: 'create',
+                    requestResourceData: operationData
+                });
+                errorEmitter.emit('permission-error', permissionError);
             });
-            errorEmitter.emit('permission-error', permissionError);
-        };
     }
 
     return (

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -33,29 +32,37 @@ export default function ProfileSettingsPage() {
   const { toast } = useToast();
   const [newImage, setNewImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      name: user?.displayName || '',
+      name: '',
     },
   });
 
   useEffect(() => {
     if (user) {
       form.reset({ name: user.displayName || '' });
-      setPreviewUrl(user.photoURL);
+      if (user.photoURL) {
+        setPreviewUrl(user.photoURL);
+      }
     }
   }, [user, form]);
   
   useEffect(() => {
+    let objectUrl: string | null = null;
     if (newImage) {
-      const objectUrl = URL.createObjectURL(newImage);
+      objectUrl = URL.createObjectURL(newImage);
       setPreviewUrl(objectUrl);
-      return () => URL.revokeObjectURL(objectUrl);
     }
+    
+    return () => {
+        if (objectUrl) {
+            URL.revokeObjectURL(objectUrl);
+        }
+    };
   }, [newImage]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,16 +78,16 @@ export default function ProfileSettingsPage() {
 
   async function onSubmit(values: ProfileFormValues) {
     if (!user) return;
-    setIsUploading(true);
+    setIsUpdating(true);
     try {
       await updateUserProfile(values.name, newImage);
       toast({ title: "Profile Updated", description: "Your profile has been updated successfully." });
-      setNewImage(null);
+      setNewImage(null); // Clear the new image after successful upload
     } catch (error) {
       console.error("Error updating profile:", error);
       toast({ title: "Update Failed", description: "Could not update your profile. Please try again.", variant: "destructive" });
     } finally {
-      setIsUploading(false);
+      setIsUpdating(false);
     }
   }
   
@@ -89,7 +96,7 @@ export default function ProfileSettingsPage() {
     return name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
   }
 
-  const isLoading = authLoading || isUploading;
+  const isLoading = authLoading || isUpdating;
 
   return (
     <div className="space-y-6">
@@ -107,17 +114,15 @@ export default function ProfileSettingsPage() {
             </CardHeader>
             <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="md:col-span-1 flex flex-col items-center gap-4">
-                 <Avatar className="h-32 w-32 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                    {previewUrl ? (
+                 <Avatar className="h-32 w-32 cursor-pointer" onClick={() => !isLoading && fileInputRef.current?.click()}>
+                    {previewUrl && (
                          <AvatarImage src={previewUrl} alt="Profile Preview" className="object-cover" />
-                    ): (
-                       <AvatarImage src={user?.photoURL ?? undefined} alt={user?.displayName ?? ''} className="object-cover" />
                     )}
                     <AvatarFallback className="text-4xl">
                         {isLoading ? <Loader2 className="h-10 w-10 animate-spin" /> : getInitials(user?.displayName)}
                     </AvatarFallback>
                 </Avatar>
-                <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/png, image/jpeg, image/gif" />
+                <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/png, image/jpeg, image/gif" disabled={isLoading} />
                 <Button type="button" variant="outline" size="sm" onClick={() => fileInputRef.current?.click()} disabled={isLoading}>
                     <User className="mr-2 h-4 w-4" /> Change Picture
                 </Button>
@@ -145,7 +150,7 @@ export default function ProfileSettingsPage() {
             </CardContent>
           </Card>
           <div className="flex justify-end">
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading || !form.formState.isDirty && !newImage}>
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
               {isLoading ? 'Saving...' : 'Save Changes'}
             </Button>

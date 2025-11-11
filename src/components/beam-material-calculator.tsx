@@ -17,7 +17,6 @@ type Inputs = {
   beamLength: number;
   beamWidth: number;
   beamDepth: number;
-  slabThickness: number; // New field
   mixRatio: string;
   mainTopDia: number;
   mainTopCount: number;
@@ -52,7 +51,6 @@ export default function BeamMaterialCalculator({ onSave, initialData, isEditing 
     beamLength: 18,
     beamWidth: 10,
     beamDepth: 18,
-    slabThickness: 5, // Default slab thickness
     mixRatio: "1:1.5:3",
     mainTopDia: 16,
     mainTopCount: 2,
@@ -87,9 +85,9 @@ export default function BeamMaterialCalculator({ onSave, initialData, isEditing 
       <CardHeader>
         <div className="flex items-center gap-2">
             <BeamIcon />
-            <CardTitle>{isEditing ? "Edit" : "Add"} Floor Beam Calculation</CardTitle>
+            <CardTitle>{isEditing ? "Edit" : "Add"} Beam Calculation</CardTitle>
         </div>
-        <CardDescription>Enter the details for this floor beam group. Slab thickness will be deducted from beam depth.</CardDescription>
+        <CardDescription>Enter the details for this beam group.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -115,19 +113,13 @@ export default function BeamMaterialCalculator({ onSave, initialData, isEditing 
                 </div>
             </div>
              <div className="space-y-2">
-                <Label htmlFor="beamDepth" className="flex items-center gap-2 text-muted-foreground text-xs"><ChevronsUpDown className="w-4 h-4" />Beam Depth (Total)</Label>
+                <Label htmlFor="beamDepth" className="flex items-center gap-2 text-muted-foreground text-xs"><ChevronsUpDown className="w-4 h-4" />Beam Depth</Label>
                  <div className="relative">
                     <Input id="beamDepth" name="beamDepth" type="number" value={inputs.beamDepth} onChange={handleInputChange} placeholder="inches" className="pr-12" />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-muted-foreground">inches</span>
                 </div>
             </div>
-            <div className="space-y-2">
-                <Label htmlFor="slabThickness" className="flex items-center gap-2 text-muted-foreground text-xs"><Layers className="w-4 h-4" />Connected Slab Thickness</Label>
-                 <div className="relative">
-                    <Input id="slabThickness" name="slabThickness" type="number" value={inputs.slabThickness} onChange={handleInputChange} placeholder="inches" className="pr-12" />
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-xs text-muted-foreground">inches</span>
-                </div>
-            </div>
+            
              <div className="space-y-2">
                 <Label htmlFor="supportWidth" className="flex items-center gap-2 text-muted-foreground text-xs"><Ruler className="w-4 h-4" />Support Width (for Dev. L)</Label>
                  <div className="relative">
@@ -239,5 +231,3 @@ export default function BeamMaterialCalculator({ onSave, initialData, isEditing 
     </Card>
   );
 }
-
-    

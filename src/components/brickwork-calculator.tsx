@@ -198,5 +198,3 @@ export default function BrickworkCalculator({ onSave, initialData, isEditing = f
     </Card>
   );
 }
-
-    

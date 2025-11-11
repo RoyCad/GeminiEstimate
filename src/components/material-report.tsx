@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { StructuralPart } from '@/app/dashboard/projects/[id]/page';
+import type { StructuralPart } from '@/components/project-detail-client';
 import { calculatePartMaterials } from '@/lib/material-calculator';
 
 type MaterialReportProps = {
@@ -20,8 +20,6 @@ const MaterialReport: React.FC<MaterialReportProps> = ({ part }) => {
   const concreteMaterials = Object.entries(report).filter(([key]) => ['Cement (bags)', 'Sand (cft)', 'Aggregate (cft)'].includes(key));
   const brickMaterials = Object.entries(report).filter(([key]) => key.includes('Bricks'));
   const steelMaterials = Object.entries(report).filter(([key]) => key.startsWith('Steel'));
-  const formwork = Object.entries(report).find(([key]) => key.startsWith('Shuttering'));
-  const otherMaterials = Object.entries(report).filter(([key]) => !['Cement (bags)', 'Sand (cft)', 'Aggregate (cft)'].includes(key) && !key.includes('Bricks') && !key.startsWith('Steel') && !key.startsWith('Shuttering'));
 
 
   return (
@@ -40,7 +38,7 @@ const MaterialReport: React.FC<MaterialReportProps> = ({ part }) => {
               {concreteMaterials.map(([key, value]) => (
                   <TableRow key={key}>
                     <TableCell>{key}</TableCell>
-                    <TableCell className="text-right">{typeof value === 'number' ? value.toFixed(2) : value}</TableCell>
+                    <TableCell className="text-right">{value.toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -61,7 +59,7 @@ const MaterialReport: React.FC<MaterialReportProps> = ({ part }) => {
               {brickMaterials.map(([key, value]) => (
                   <TableRow key={key}>
                     <TableCell>{key}</TableCell>
-                    <TableCell className="text-right">{typeof value === 'number' ? value.toFixed(2) : value}</TableCell>
+                    <TableCell className="text-right">{value.toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -82,41 +80,13 @@ const MaterialReport: React.FC<MaterialReportProps> = ({ part }) => {
               {steelMaterials.map(([key, value]) => (
                   <TableRow key={key}>
                     <TableCell>{key.replace(' (kg)','')}</TableCell>
-                    <TableCell className="text-right">{typeof value === 'number' ? value.toFixed(2) : value}</TableCell>
+                    <TableCell className="text-right">{value.toFixed(2)}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </div>
       )}
-       {formwork && (
-         <div>
-          <h4 className="font-semibold mb-2">Formwork</h4>
-          <Table>
-            <TableBody>
-                <TableRow>
-                    <TableCell>{formwork[0]}</TableCell>
-                    <TableCell className="text-right">{typeof formwork[1] === 'number' ? formwork[1].toFixed(2) : formwork[1]}</TableCell>
-                </TableRow>
-            </TableBody>
-          </Table>
-        </div>
-       )}
-        {otherMaterials.length > 0 && (
-            <div>
-            <h4 className="font-semibold mb-2">Other Details</h4>
-            <Table>
-                <TableBody>
-                {otherMaterials.map(([key, value]) => (
-                    <TableRow key={key}>
-                        <TableCell>{key}</TableCell>
-                        <TableCell className="text-right">{value}</TableCell>
-                    </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-            </div>
-        )}
     </div>
   );
 };

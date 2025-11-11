@@ -87,7 +87,7 @@ export default function GradeBeamMaterialCalculator({ onSave, initialData, isEdi
             <GradeBeamIcon />
             <CardTitle>{isEditing ? "Edit" : "Add"} Grade Beam Calculation</CardTitle>
         </div>
-        <CardDescription>Enter the details for this grade beam group. Full depth will be used for calculation.</CardDescription>
+        <CardDescription>Enter the details for this grade beam group.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -231,5 +231,3 @@ export default function GradeBeamMaterialCalculator({ onSave, initialData, isEdi
     </Card>
   );
 }
-
-    

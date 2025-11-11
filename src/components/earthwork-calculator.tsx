@@ -114,7 +114,7 @@ export default function EarthworkCalculator({ onSave, initialData, isEditing = f
                 </div>
             </div>
         </div>
-        <Card className="glass-card">
+        <Card className="bg-muted/50">
             <CardHeader className="pb-4">
                 <CardTitle className="text-lg">Calculated Volume</CardTitle>
             </CardHeader>
@@ -129,7 +129,7 @@ export default function EarthworkCalculator({ onSave, initialData, isEditing = f
             </Button>
             {estimation && (
                 <div className="grid grid-cols-2 gap-4">
-                    <Card className="glass-card">
+                    <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Estimated Time</CardTitle>
                             <Clock className="h-4 w-4 text-muted-foreground" />
@@ -138,7 +138,7 @@ export default function EarthworkCalculator({ onSave, initialData, isEditing = f
                             <div className="text-2xl font-bold">{estimation.time}</div>
                         </CardContent>
                     </Card>
-                     <Card className="glass-card">
+                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Required Manpower</CardTitle>
                             <Users className="h-4 w-4 text-muted-foreground" />
@@ -160,5 +160,3 @@ export default function EarthworkCalculator({ onSave, initialData, isEditing = f
     </Card>
   );
 }
-
-    

@@ -1,29 +1,49 @@
 
 'use client';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { useAuth } from '@/hooks/use-auth';
-import { Loader2 } from 'lucide-react';
+
+import AuthForm from '@/components/auth-form';
+import MarketPriceAnalysis from '@/components/market-price-analysis';
+import PdfEstimationTool from '@/components/pdf-estimation-tool';
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
 
 export default function Home() {
-  const router = useRouter();
-  const { user, loading } = useAuth();
-
-  useEffect(() => {
-    if (!loading) {
-      if (user) {
-        router.replace('/dashboard');
-      } else {
-        router.replace('/login');
-      }
-    }
-  }, [user, loading, router]);
+  const [isLoginFocused, setIsLoginFocused] = useState(false);
 
   return (
-     <div className="flex h-screen items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <Loader2 className="h-10 w-10 animate-spin" />
-        <p className="text-muted-foreground">Loading application...</p>
+    <div className="flex min-h-screen items-center justify-center p-4 bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      <div
+        className={cn(
+          'grid w-full max-w-6xl items-center gap-8 transition-all duration-700 ease-in-out lg:grid-cols-2'
+        )}
+      >
+        {/* Features on the left */}
+        <div
+          className={cn(
+            'order-2 flex flex-col items-center gap-8 transition-all duration-500 lg:order-1',
+            {
+              'lg:scale-95 lg:opacity-75': isLoginFocused,
+            }
+          )}
+        >
+          <div className="w-full">
+            <MarketPriceAnalysis />
+          </div>
+          <div className="w-full">
+            <PdfEstimationTool />
+          </div>
+        </div>
+
+        {/* Auth form on the right */}
+        <div
+          className={cn(
+            'order-1 flex items-center justify-center transition-all duration-700 ease-in-out lg:order-2'
+          )}
+          onFocusCapture={() => setIsLoginFocused(true)}
+          onBlurCapture={() => setIsLoginFocused(false)}
+        >
+          <AuthForm mode="login" />
+        </div>
       </div>
     </div>
   );

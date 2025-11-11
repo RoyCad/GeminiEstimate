@@ -1,12 +1,9 @@
-
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 import { cn } from '@/lib/utils';
 import { Inter, PT_Sans } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
-import { FirebaseClientProvider } from '@/firebase/client-provider';
-import { AuthProvider } from '@/hooks/use-auth';
 
 export const metadata: Metadata = {
   title: 'GeminiEstimate',
@@ -34,21 +31,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#F2F3F5" />
+        <meta name="theme-color" content="#1E40AF" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
-      <body className={cn("font-body antialiased min-h-screen gradient-background", inter.variable, ptSans.variable)}>
+      <body className={cn("font-body antialiased min-h-screen", inter.variable, ptSans.variable)}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="dark"
+          enableSystem
           disableTransitionOnChange
         >
-          <FirebaseClientProvider>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
-          </FirebaseClientProvider>
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>
